@@ -1,0 +1,276 @@
+/*------------------------------------------------------------------
+[Master Stylesheet - CORRECTED]
+
+Project:    UIPlay - Box Shadow Generator
+Version:    2.1
+Author:     Your Name/AI
+-------------------------------------------------------------------*/
+
+/*------------------------------------------------------------------
+[1. Global & Root Variables]
+*/
+:root {
+    --primary-bg: #f0f2f5;
+    --secondary-bg: #ffffff;
+    --primary-text: #333333;
+    --secondary-text: #555;
+    --accent-color: #007bff;
+    --border-color: #dee2e6;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --input-bg: #f8f9fa;
+    --card-feedback-bg: rgba(40, 167, 69, 0.9);
+}
+
+[data-theme="dark"] {
+    --primary-bg: #121212;
+    --secondary-bg: #1e1e1e;
+    --primary-text: #e0e0e0;
+    --secondary-text: #b0b0b0;
+    --accent-color: #0d6efd;
+    --border-color: #333;
+    --shadow-color: rgba(0, 0, 0, 0.2);
+    --input-bg: #2a2a2a;
+    --card-feedback-bg: rgba(45, 201, 78, 0.95);
+}
+
+body {
+    background-color: var(--primary-bg);
+    color: var(--primary-text);
+    font-family: 'Poppins', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/*------------------------------------------------------------------
+[2. Main Generator Layout]
+*/
+.page-title {
+    text-align: center;
+    margin: 40px 20px;
+}
+
+.page-title h1, .page-title h2 {
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.page-title p {
+    color: var(--secondary-text);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.generator-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 0 20px 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.controls-panel,
+.preview-panel {
+    background-color: var(--secondary-bg);
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 15px var(--shadow-color);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.controls-panel {
+    flex: 1;
+    min-width: 320px;
+}
+
+.preview-panel {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+}
+
+.controls-panel h2,
+.preview-panel h2 {
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 25px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
+}
+
+/*------------------------------------------------------------------
+[3. Controls & Inputs Styling]
+*/
+.control-group {
+    margin-bottom: 25px;
+}
+
+.control-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: var(--secondary-text);
+}
+
+.control-group input[type="color"] {
+    width: 100%;
+    height: 50px;
+    padding: 5px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--input-bg);
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 400;
+}
+
+input[type="checkbox"] {
+    width: 1.3em;
+    height: 1.3em;
+    margin-right: 10px;
+    accent-color: var(--accent-color);
+}
+
+input[type="range"] {
+    -webkit-appearance: none; appearance: none;
+    width: 100%; height: 8px;
+    background: var(--border-color);
+    border-radius: 5px; outline: none; opacity: 0.9;
+    transition: opacity 0.2s;
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 20px; height: 20px;
+    background: var(--accent-color);
+    cursor: pointer; border-radius: 50%;
+    border: 2px solid var(--secondary-bg);
+}
+input[type="range"]::-moz-range-thumb {
+    width: 20px; height: 20px;
+    background: var(--accent-color);
+    cursor: pointer; border-radius: 50%;
+    border: 2px solid var(--secondary-bg);
+}
+
+/*------------------------------------------------------------------
+[4. Preview & Code Output Styling]
+*/
+.preview-box {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-bg);
+    border: 1px dashed var(--border-color);
+    border-radius: 8px;
+    min-height: 250px;
+    padding: 20px;
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+
+#shadow-preview-element {
+    width: 150px;
+    height: 150px;
+    background-color: var(--accent-color);
+    border-radius: 12px;
+    transition: all 0.2s linear; /* Smooth transition for shadow changes */
+}
+
+.code-output {
+    position: relative;
+}
+
+.code-output pre {
+    background-color: var(--input-bg);
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: 'Fira Code', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--secondary-text);
+}
+
+.copy-btn {
+    position: absolute; top: 15px; right: 15px;
+    background: var(--accent-color); color: white; border: none;
+    padding: 8px 15px; border-radius: 6px; cursor: pointer;
+    font-size: 14px; font-weight: 600; transition: all 0.2s ease;
+}
+.copy-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+}
+.copy-btn.copied { background-color: #28a745; }
+
+/*------------------------------------------------------------------
+[5. Shadow Preset Grid Styling]
+*/
+.shadow-grid-container {
+    padding: 0 20px 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.shadow-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.shadow-card {
+    background-color: var(--secondary-bg);
+    height: 200px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+    position: relative;
+    overflow: hidden; /* Important for feedback element */
+    /* opacity is set by JS for staggered animation */
+}
+
+.shadow-card:hover, .shadow-card:focus {
+    transform: translateY(-5px);
+}
+
+.shadow-card-feedback {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--card-feedback-bg);
+    color: white;
+    font-weight: 600;
+    font-size: 1.2rem;
+    border-radius: 12px;
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none; /* Allows clicks to go through */
+    transition: all 0.3s ease;
+}
+
+.shadow-card.copied .shadow-card-feedback {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/*------------------------------------------------------------------
+[6. Responsive Design]
+*/
+@media (max-width: 992px) {
+    .generator-container { flex-direction: column; }
+}
+
+@media (max-width: 576px) {
+    .page-title { margin: 20px 10px; }
+    .generator-container, .shadow-grid-container { padding: 0 10px 20px; }
+    .controls-panel, .preview-panel { padding: 20px; }
+    .shadow-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+}

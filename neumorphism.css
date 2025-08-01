@@ -1,0 +1,126 @@
+/* --- NEUMORPHISM PAGE SPECIFIC STYLES --- */
+:root {
+    --neumo-red: #d94242;
+    --neumo-bg: var(--neumo-red);
+    --neumo-text: #ffffff;
+    --neumo-control-bg: rgba(0, 0, 0, 0.2);
+    --neumo-border-color: rgba(255, 255, 255, 0.2);
+    --neumo-shadow: rgba(0, 0, 0, 0.2);
+    --slider-track: rgba(255, 255, 255, 0.3);
+    --slider-thumb: #ffffff;
+}
+
+body.dark-mode {
+    --neumo-red: #1f1f1f;
+}
+
+body {
+    background-color: var(--neumo-bg);
+    color: var(--neumo-text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    margin: 0;
+    transition: background-color 0.3s ease;
+    /* overflow: hidden; */
+}
+
+/* --- LAYOUT --- */
+.neumo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+.neumo-preview {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+#preview-element {
+    transition: all 0.2s ease-out;
+}
+
+.neumo-controls {
+    flex-basis: 450px;
+    background: var(--neumo-control-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 0 20px 40px var(--neumo-shadow);
+    border: 1px solid var(--neumo-border-color);
+}
+
+/* Decorative corner shapes */
+.corner-shape {
+    position: fixed;
+    width: 150px;
+    height: 150px;
+    z-index: -1;
+    opacity: 0.1;
+}
+.top-left { top: -50px; left: -50px; border-radius: 50%; background: #FFD700; }
+.top-right { top: 20px; right: 20px; border: 20px solid var(--neumo-text); border-radius: 50%; width: 50px; height: 50px; }
+.bottom-left { bottom: 20px; left: 20px; border: 20px solid var(--neumo-text); border-radius: 50%; width: 50px; height: 50px;}
+.bottom-right { bottom: -50px; right: -50px; border: 20px solid var(--neumo-text); border-radius: 50%;}
+
+
+/* --- CONTROLS STYLING --- */
+.control-group {
+    margin-bottom: 1.5rem;
+}
+.control-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    opacity: 0.8;
+}
+
+/* Color Picker */
+.color-picker { display: flex; align-items: center; gap: 0.5rem; }
+.color-picker-swatch { width: 32px; height: 32px; border: 2px solid var(--neumo-border-color); border-radius: 8px; cursor: pointer; }
+.color-picker-hex { flex-grow: 1; background: rgba(0,0,0,0.2); border: 1px solid var(--neumo-border-color); color: var(--neumo-text); padding: 8px; border-radius: 8px; font-family: 'Fira Code', monospace; text-align: center; }
+.reset-btn { background: rgba(0,0,0,0.2); border: 1px solid var(--neumo-border-color); color: var(--neumo-text); padding: 8px 12px; border-radius: 8px; font-weight: 600; cursor: pointer; }
+.reset-btn:hover { background: rgba(0,0,0,0.4); }
+
+/* Custom Sliders */
+.slider-container { position: relative; }
+input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; background: var(--slider-track); border-radius: 2px; outline: none; cursor: pointer; }
+input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--slider-thumb); box-shadow: 0 0 5px rgba(0,0,0,0.5); }
+.slider-tooltip { position: absolute; top: -35px; left: 50%; transform: translateX(-50%); background: var(--slider-thumb); color: #333; padding: 4px 8px; border-radius: 4px; font-weight: 600; font-size: 0.8rem; pointer-events: none; opacity: 0; transition: opacity 0.2s; }
+.slider-container:hover .slider-tooltip { opacity: 1; }
+
+/* Shape Selector */
+.shape-selector { position: relative; display: flex; background: rgba(0,0,0,0.2); border-radius: 12px; padding: 4px; }
+.shape-btn { flex: 1; background: transparent; border: none; padding: 10px; cursor: pointer; z-index: 2; }
+.shape-btn svg { width: 32px; height: 24px; stroke: var(--neumo-text); opacity: 0.5; stroke-width: 2; }
+.shape-btn.active svg { opacity: 1; }
+.shape-indicator { position: absolute; top: 4px; left: 4px; height: calc(100% - 8px); width: calc(25% - 4px); background: rgba(0,0,0,0.3); border-radius: 10px; z-index: 1; transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+
+/* Code Output */
+.code-output { position: relative; background: rgba(0,0,0,0.2); border: 1px solid var(--neumo-border-color); border-radius: 12px; }
+.copy-btn { position: absolute; top: 12px; right: 12px; padding: 6px 12px; background: #2cbc63; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; }
+pre { padding: 1.5rem; margin: 0; white-space: pre-wrap; word-wrap: break-word; font-family: 'Fira Code', monospace; font-size: 0.85rem; line-height: 1.6; }
+code { color: var(--neumo-text); }
+
+
+@media only screen and (max-width: 768px) {
+
+    .neumo-container {
+    flex-direction: column;
+}
+
+#preview-element{
+    margin-bottom: 30px;
+}
+
+.neumo-controls{
+    zoom:0.5;
+}
+
+}

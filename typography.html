@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TypeSmith Editor -UIPlay</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Inter:wght@400;600&family=Roboto+Slab&family=Montserrat&family=Playfair+Display&family=Fira+Code&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="generator.css">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="typography.css">
+    <link rel="stylesheet" href="style.css"> 
+    
+</head>
+<body>
+
+    <header>
+    <a href="index.html" class="logo">UIPlay</a>
+    <nav class="d-flex align-items-center">
+        <ul class="nav-links">
+            <li><a href="index.html">Playground</a></li>
+            <!-- Bootstrap Dropdown Structure -->
+            <li class="dropdown">
+                <a class="nav-tools-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="0,20">
+                    Tools
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="neumorphism.html">ShadowMint</a></li>
+                    <li><a class="dropdown-item" href="swindex.html">SwatchLab</a></li>
+                    <li><a class="dropdown-item" href="scindex.html">StyleCraft</a></li>
+                    <li><a class="dropdown-item" href="shadows.html">Box Shadows</a></li>
+                    <li><a class="dropdown-item" href="animations.html">CSS Animations</a></li>
+                    <li><a class="dropdown-item" href="filter.html">VisualTune</a></li>
+                    <li><a class="dropdown-item" href="border.html">Edgelet</a></li>
+                    <li><a class="dropdown-item" href="typography.html">TypeSmith</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <!-- <div class="theme-switcher">
+        <label for="theme-toggle" class="theme-label">Midnight Pixels</label>
+        <input type="checkbox" id="theme-toggle">
+    </div> -->
+</header>
+
+    <main>
+        <div class="page-title">
+            <h1>TypeSmith Live Editor</h1>
+            <p>Take full control of your text styling and export the CSS.</p>
+        </div>
+
+        <div class="generator-container">
+            <div class="controls-panel">
+                <h2>Controls</h2>
+                <div class="control-group">
+                    <label>Text</label>
+                    <input type="text" id="font-text" value="Live Preview">
+                </div>
+                 <div class="control-group">
+                    <label>Font Family</label>
+                    <select id="font-family">
+                        <option>Poppins</option><option>Inter</option><option>Roboto Slab</option><option>Montserrat</option><option>Playfair Display</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Font Size: <span id="font-size-val">48</span>px</label>
+                    <input type="range" id="font-size" min="12" max="150" value="48">
+                </div>
+                <div class="control-group">
+                    <label>Font Weight: <span id="font-weight-val">800</span></label>
+                    <input type="range" id="font-weight" min="100" max="900" step="100" value="800">
+                </div>
+                <div class="control-group">
+                    <label>Letter Spacing: <span id="letter-spacing-val">2</span>px</label>
+                    <input type="range" id="letter-spacing" min="-5" max="20" step="0.5" value="2">
+                </div>
+                 <div class="control-group">
+                    <label>Color</label>
+                    <input type="color" id="font-color" value="#333333">
+                </div>
+            </div>
+
+            <div class="preview-panel">
+                <h2>Live Preview</h2>
+                <div class="preview-box">
+                    <div id="typography-preview-box">Live Preview</div>
+                </div>
+
+                <h2>Generated CSS</h2>
+                <div class="code-output">
+                    <button id="copy-btn" class="copy-btn">Copy</button>
+                    <pre><code id="code-output"></code></pre>
+                </div>
+            </div>
+        </div>
+    </main>
+   <!-- Bootstrap JS Bundle CDN (includes Popper.js) -->
+        <!-- Bootstrap JS Bundle CDN (includes Popper.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <!-- You can remove the duplicate header.js script if you have it twice -->
+    <script src="header.js"></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // ---ELEMENT SELECTORS---
+        const controls = {
+            text: document.getElementById('font-text'),
+            family: document.getElementById('font-family'),
+            size: document.getElementById('font-size'),
+            weight: document.getElementById('font-weight'),
+            spacing: document.getElementById('letter-spacing'),
+            color: document.getElementById('font-color'),
+        };
+        const values = {
+            size: document.getElementById('font-size-val'),
+            weight: document.getElementById('font-weight-val'),
+            spacing: document.getElementById('letter-spacing-val'),
+        };
+        const preview = document.getElementById('typography-preview-box');
+        const codeEl = document.getElementById('code-output');
+        const copyBtn = document.getElementById('copy-btn');
+
+        // ---FUNCTIONS---
+
+        // Function to update the font style and trigger animation
+        function updateFont(isInitial = false) {
+            const newStyle = {
+                fontFamily: `'${controls.family.value}', sans-serif`,
+                fontSize: `${controls.size.value}px`,
+                fontWeight: controls.weight.value,
+                letterSpacing: `${controls.spacing.value}px`,
+                color: controls.color.value,
+            };
+
+            // Apply styles directly
+            Object.assign(preview.style, newStyle);
+            preview.textContent = controls.text.value;
+
+            // Update display values
+            values.size.textContent = controls.size.value;
+            values.weight.textContent = controls.weight.value;
+            values.spacing.textContent = controls.spacing.value;
+
+            // Generate CSS code
+            codeEl.textContent = `font-family: ${newStyle.fontFamily};\n` +
+                                 `font-size: ${newStyle.fontSize};\n` +
+                                 `font-weight: ${newStyle.fontWeight};\n` +
+                                 `letter-spacing: ${newStyle.letterSpacing};\n` +
+                                 `color: ${newStyle.color};`;
+
+            // Animate preview text on change (but not on initial load)
+            if (!isInitial) {
+                anime.remove(preview); // Remove any ongoing animations
+                anime({
+                    targets: preview,
+                    scale: [0.98, 1],
+                    opacity: [0.7, 1],
+                    duration: 400,
+                    easing: 'easeOutQuad'
+                });
+            }
+        }
+
+        // Function for copy button
+        function setupCopyButton() {
+            copyBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText(codeEl.textContent).then(() => {
+                    const originalText = copyBtn.textContent;
+                    copyBtn.textContent = 'Copied!';
+                    copyBtn.classList.add('copied');
+
+                    anime({
+                        targets: copyBtn,
+                        scale: [1, 1.1, 1],
+                        duration: 300,
+                        easing: 'easeInOutSine'
+                    });
+
+                    setTimeout(() => {
+                        copyBtn.textContent = originalText;
+                        copyBtn.classList.remove('copied');
+                    }, 2000);
+                });
+            });
+        }
+        
+        // ---INITIALIZATION & EVENT LISTENERS---
+
+        // Add event listeners to all controls
+        Object.values(controls).forEach(control => {
+            if (control) {
+                control.addEventListener('input', () => updateFont(false));
+            }
+        });
+
+        // Setup copy button functionality
+        setupCopyButton();
+        
+        // Initial call to set default values
+        updateFont(true);
+
+        // ---PAGE LOAD ANIMATIONS---
+        const timeline = anime.timeline({
+            easing: 'easeOutExpo',
+            duration: 1000
+        });
+
+        timeline
+            .add({
+                targets: '.page-title',
+                translateY: [20, 0],
+                opacity: [0, 1],
+                duration: 700
+            })
+            .add({
+                targets: '.controls-panel, .preview-panel',
+                translateY: [20, 0],
+                opacity: [0, 1],
+                delay: anime.stagger(100) // Stagger the appearance of the panels
+            }, '-=500'); // Starts 500ms before the previous animation ends
+    });
+    </script>
+</body>
+</html>
